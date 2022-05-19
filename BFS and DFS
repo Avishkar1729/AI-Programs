@@ -1,0 +1,104 @@
+#include<iostream>
+#include<stdio.h>
+#include<conio.h>
+using namespace std;
+
+void Inorder(struct Node*);
+void Preorder(struct Node*);
+void Postorder(struct Node*);
+void PrintLevelOrder(struct Node* root);
+void PrintCurrentLevel(struct Node* root,int level);
+int height(struct Node* node);
+struct Node
+{
+	int data;
+	struct Node* left;
+	struct Node* right;
+	Node(int val)
+	{
+		data=val;
+		left=NULL;
+		right=NULL;
+	}
+};
+
+void Preorder(Node* ptr)
+{
+       if(ptr!=NULL)
+       {
+	cout<<ptr->data<<" ";
+	Preorder(ptr->left);
+	Preorder(ptr->right);
+       }
+}
+void Inorder(Node* ptr)
+{
+       if(ptr!=NULL)
+       {
+	Inorder(ptr->left);
+	cout<<ptr->data<<" ";
+	Inorder(ptr->right);
+       }
+}
+void Postorder(Node* ptr)
+{
+       if(ptr!=NULL)
+       {
+	Postorder(ptr->left);
+	Postorder(ptr->right);
+	cout<<ptr->data<<" ";
+       }
+}
+void PrintLevelOrder(Node* root)
+{
+	int h=height(root);
+	int i;
+	for(i=1;i<=h;i++)
+	PrintCurrentLevel(root,i);
+}
+void PrintCurrentLevel(Node* root,int level)
+{
+	if(root==NULL)
+	return;
+	if(level==1)
+	cout<<root->data<<"  ";
+	else if(level>1)
+	{
+		PrintCurrentLevel(root->left,level-1);
+		PrintCurrentLevel(root->right,level-1);
+	}
+}
+int height(Node* node)
+{
+	if(node==NULL)
+	return 0;
+	else
+	{
+		//compute height of each subtree
+		int lheight=height(node->left);
+		int rheight=height(node->right);
+		if(lheight>rheight) //use the larger one
+		return (lheight+1);
+		else
+		return (rheight+1);
+	}
+}
+int main()
+{
+	
+	int lheight=0,rheight=0;
+	struct Node* root=new Node(1);
+	root->left=new Node(2);
+	root->right=new Node(3);
+	root->left->left=new Node(4);
+	root->left->right=new Node(5);
+	cout<<"\n Preorder Traversal=";
+	Preorder(root);
+	cout<<"\n Inorder traversal=";
+	Inorder(root);
+	cout<<"\n Postorder traversal=";
+	Postorder(root);
+	cout<<"\n Level Order Traversal=";
+	PrintLevelOrder(root);
+	
+}
