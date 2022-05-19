@@ -1,0 +1,29 @@
+#include<stdio.h>
+#include<conio.h>
+void main()
+{
+
+int arr[10]={6,12,0,18,11,99,55,7,44,2};
+int n=10;
+int i,j,pos,temp;
+
+for(i=0;i<(n-1);i++)
+{
+	pos=i;
+	for(j=i+1;j<n;j++)
+	{
+		if(arr[pos]>arr[j])
+		pos=j;
+	}
+	if(pos!=i)
+	{
+		temp=arr[i];
+		arr[i]=arr[pos];
+		arr[pos]=temp;
+	}
+}
+printf("\n\t Sorted Array=\t");
+for(i=0;i<n;i++)
+printf("%d  ",arr[i]);
+
+}
